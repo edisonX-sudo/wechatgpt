@@ -3,6 +3,7 @@ package wechat
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"wechatbot/config"
 	"wechatbot/openai"
@@ -32,7 +33,12 @@ func NewGroupMessageHandler() MessageHandlerInterface {
 func (gmh *GroupMessageHandler) ReplyText(msg *openwechat.Message) error {
 	sender, err := msg.Sender()
 	group := openwechat.Group{User: sender}
-	log.Printf("Received Group %v Text Msg : %v", group.NickName, msg.Content)
+	nowTs := time.Now()
+	msgTs := time.UnixMilli(msg.CreateTime * 1000)
+	if msgTs.Add(time.Minute*2).UnixMilli() < nowTs.UnixMilli() {
+		return nil
+	}
+	log.Printf("Received Group %v Text Msg : %v(msgts:%d, curts:%d)", group.NickName, msg.Content, msgTs.UnixMilli(), nowTs.UnixMilli())
 
 	wechat := config.GetWechatKeyword()
 	requestText := msg.Content

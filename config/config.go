@@ -15,6 +15,7 @@ type Config struct {
 
 type ChatGptConfig struct {
 	Token         string  `json:"token,omitempty"  mapstructure:"token,omitempty"  yaml:"token,omitempty"`
+	ApiHost       string  `json:"apiHost,omitempty"  mapstructure:"apiHost,omitempty"  yaml:"apiHost,omitempty"`
 	Wechat        *string `json:"wechat,omitempty" mapstructure:"wechat,omitempty" yaml:"wechat,omitempty"`
 	WechatKeyword *string `json:"wechat_keyword"   mapstructure:"wechat_keyword"   yaml:"wechat_keyword"`
 	Telegram      *string `json:"telegram"         mapstructure:"telegram"         yaml:"telegram"`
@@ -136,6 +137,25 @@ func GetOpenAiApiKey() *string {
 		apiKey = &config.ChatGpt.Token
 	}
 	return apiKey
+}
+
+func GetOpenAiApiHost() *string {
+	apiHost := getEnv("api_host")
+	if apiHost != nil {
+		return apiHost
+	}
+
+	defVal := "https://api.openai.com"
+	if config == nil {
+		return &defVal
+	}
+	if config.ChatGpt.ApiHost == "" {
+		return &defVal
+	}
+	if apiHost == nil {
+		apiHost = &config.ChatGpt.ApiHost
+	}
+	return apiHost
 }
 
 func getEnv(key string) *string {

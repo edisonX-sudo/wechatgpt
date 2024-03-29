@@ -119,7 +119,7 @@ func Completions(msg string) (*string, error) {
 	})
 
 	requestBody := ChatGPTRequestBody{
-		Model:    "gpt-3.5-turbo",
+		Model:    "gpt-4",
 		Messages: messages,
 	}
 	requestData, err := json.Marshal(requestBody)
@@ -130,7 +130,9 @@ func Completions(msg string) (*string, error) {
 	}
 
 	log.Debugf("request openai json string : %v", string(requestData))
-	req, err := http.NewRequest("POST", "https://api.openai.com/v1/chat/completions", bytes.NewBuffer(requestData))
+	host := config.GetOpenAiApiHost()
+	actualHost := fmt.Sprintf("%s/v1/chat/completions", *host)
+	req, err := http.NewRequest("POST", actualHost, bytes.NewBuffer(requestData))
 	if err != nil {
 		log.Error(err)
 		return nil, err
