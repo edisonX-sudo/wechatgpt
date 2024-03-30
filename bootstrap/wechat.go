@@ -15,15 +15,19 @@ func StartWebChat() {
 	bot.MessageHandler = wechat.Handler
 	bot.UUIDCallback = openwechat.PrintlnQrcodeUrl
 
-	reloadStorage := openwechat.NewJsonFileHotReloadStorage("token.json")
+	if err := os.MkdirAll("data", 0755); err != nil {
+		log.Fatal(err)
+	}
+	tokenPath := "data/token.json"
+	reloadStorage := openwechat.NewJsonFileHotReloadStorage(tokenPath)
 	err := bot.HotLogin(reloadStorage)
 	if err != nil {
-		err := os.Remove("token.json")
+		err := os.Remove(tokenPath)
 		if err != nil {
 			return
 		}
 
-		reloadStorage = openwechat.NewJsonFileHotReloadStorage("token.json")
+		reloadStorage = openwechat.NewJsonFileHotReloadStorage(tokenPath)
 		err = bot.HotLogin(reloadStorage)
 		if err != nil {
 			return
