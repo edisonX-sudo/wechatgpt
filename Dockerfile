@@ -15,6 +15,8 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /root/
 
+RUN mkdir /root/data
+
 COPY --from=0 /root/build/server .
 
 CMD ["./server"]
