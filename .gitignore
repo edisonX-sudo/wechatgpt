@@ -6,3 +6,5 @@ wechatbot.exe
 run.log
 token.json
 token*.json
+data/token.json
+data/token*.json
