@@ -33,6 +33,7 @@ cp config/config.yaml.example local/config.yaml
 chatgpt:
   wechat: 小莫
   token: sk-pKHZD1fLYqXDjjsdsdsdUvIODTT3ssjdfadsJC2gTuqqhTum
+  apiHost: https://gpt.home.com
   telegram: your telegram token
 ```
 
@@ -44,6 +45,7 @@ chatgpt:
 
 | 变量名            | 值                 | 作用               |
 |----------------|-------------------|------------------|
+| api_host        | "chatgpt的定制api_host"      | 可选项              |
 | api_key        | "chatgpt的api_key" | 必填项              |
 | wechat         | "true" 或缺省        | 如果为true就会启动微信机器人 |
 | wechat_keyword | "关键字"或缺省          | 如果缺省则发任何消息机器都会回复 |
