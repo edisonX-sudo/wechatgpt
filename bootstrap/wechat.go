@@ -19,7 +19,7 @@ func StartWebChat() {
 	reloadStorage := openwechat.NewJsonFileHotReloadStorage(tokenPath)
 	err := bot.HotLogin(reloadStorage)
 	if err != nil {
-		log.Printf("HotLogin err:%s", err.Error())
+		log.Printf("1st HotLogin err:%s", err.Error())
 		err = os.Remove(tokenPath)
 		if err != nil {
 			log.Printf("os remove err:%s", err.Error())
@@ -29,6 +29,7 @@ func StartWebChat() {
 		reloadStorage = openwechat.NewJsonFileHotReloadStorage(tokenPath)
 		err = bot.HotLogin(reloadStorage)
 		if err != nil {
+			log.Printf("2rd HotLogin err:%s", err.Error())
 			return
 		}
 	}
