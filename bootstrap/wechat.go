@@ -2,7 +2,6 @@ package bootstrap
 
 import (
 	"os"
-
 	"wechatbot/handler/wechat"
 
 	"github.com/eatmoreapple/openwechat"
@@ -17,10 +16,11 @@ func StartWebChat() {
 
 	tokenPath := "data/token.json"
 	reloadStorage := openwechat.NewJsonFileHotReloadStorage(tokenPath)
-	err := bot.HotLogin(reloadStorage)
+	err := bot.HotLogin(reloadStorage, true)
 	if err != nil {
-		log.Printf("1st HotLogin err:%s", err.Error())
-		err = os.Remove(tokenPath)
+		file, _ := os.ReadFile(tokenPath)
+		log.Printf("1st HotLogin err:%s\ntoken:%s", err.Error(), string(file))
+		//err = os.Remove(tokenPath)
 		if err != nil {
 			log.Printf("os remove err:%s", err.Error())
 			return
