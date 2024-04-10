@@ -8,3 +8,5 @@ token.json
 token*.json
 data/token.json
 data/token*.json
+
+build_deploy.sh
